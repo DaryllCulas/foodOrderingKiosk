@@ -90,11 +90,13 @@ header .shopping span{
     color: #fff;
     width: 100%;
     padding: 10px;
+    cursor: pointer;
 }
 
 .list .item button:hover {
     background-color: goldenrod;
     color: black;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 .card{
     position: fixed;
@@ -162,6 +164,7 @@ header .shopping span{
 .listCard li:hover {
     background-color: #f5de85;
     color: #000000;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 .listCard li img{
     width: 90%;
@@ -177,6 +180,6 @@ header .shopping span{
 .listCard li button:hover {
     background-color: goldenrod;
     color: black;
-
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 

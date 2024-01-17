@@ -58,7 +58,7 @@ let products = [
     }, 
     {
         id: 14, 
-        name: '10pcs Kanto Fingershots Chicken',
+        name: 'Kanto Fingershots Chicken',
         image: 'kantoHotshots.png',
         price: 80
     },
