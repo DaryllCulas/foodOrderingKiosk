@@ -15,9 +15,9 @@
 
 
 body{
-    background-image: radial-gradient(#060606 1.5px, transparent 1.5px);
+    background-image: radial-gradient(#000000 1px, transparent 1px);
     background-size: 32px 32px;
-    background-color: #fff2f2;
+    background-color: #d5cfcf;
  
 }
 .container{
@@ -28,10 +28,11 @@ body{
 header{
     display: grid;
     grid-template-columns: 1fr 50px;
-    margin-top: 50px;
     background-color: goldenrod;
-    padding: 10px 40px;
+    padding: 5px 30px;
     border-radius: 20px;
+    top: 0; 
+   
 }
 header .shopping{
     position: relative;
@@ -112,10 +113,10 @@ header .shopping span{
 }
 .card h1{
     color: #E8BC0E;
-    font-weight: 100;
+    font-weight: 90;
     margin: 0;
     padding: 0 20px;
-    height: 80px;
+    height: 40px;
     display: flex;
     align-items: center;
 }
@@ -136,11 +137,16 @@ header .shopping span{
     align-items: center;
     font-weight: bold;
     cursor: pointer;
+    overflow-y: scroll;
+    
 }
 .card .checkOut div:nth-child(2){
     background-color: #1C1F25;
     color: #fff;
+  
 }
+
+
 .listCard li{
     display: grid;
     grid-template-columns: 100px repeat(3, 1fr);
@@ -151,6 +157,11 @@ header .shopping span{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.listCard li:hover {
+    background-color: #f5de85;
+    color: #000000;
 }
 .listCard li img{
     width: 90%;
@@ -168,3 +179,4 @@ header .shopping span{
     color: black;
 
 }
+
