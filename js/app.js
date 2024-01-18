@@ -5,6 +5,8 @@ let listCard = document.querySelector('.listCard');
 let body = document.querySelector('body');
 let total = document.querySelector('.total');
 let quantity = document.querySelector('.quantity');
+let totalElement = document.querySelector('.total');
+
 
 openShopping.addEventListener('click', ()=>{
     body.classList.add('active');
@@ -141,4 +143,61 @@ function changeQuantity(key, quantity){
         listCards[key].price = quantity * products[key].price;
     }
     reloadCard();
-}
+} 
+
+
+
+    // Function to show the confirmation modal
+    function showConfirmationModal() {
+      // Create a modal element
+      let modal = document.createElement('div');
+      modal.classList.add('modal', 'fade');
+      modal.id = 'confirmationModal';
+      modal.setAttribute('tabindex', '-1');
+      modal.setAttribute('aria-hidden', 'true');
+  
+      // Modal content
+      modal.innerHTML = `
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Confirm Purchase</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <p>Do you want to proceed with the purchase?</p>
+                      <p>Total Amount: ₱${total.innerText}</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary" id="confirmPurchase">Confirm Purchase</button>
+                  </div>
+              </div>
+          </div>
+      `;
+  
+      // Append the modal to the body
+      document.body.appendChild(modal);
+  
+      // Activate the Bootstrap modal
+      let bootstrapModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+      bootstrapModal.show();
+  
+      // Handle the "Confirm Purchase" button click
+      let confirmPurchaseButton = document.getElementById('confirmPurchase');
+      confirmPurchaseButton.addEventListener('click', () => {
+        // Perform actions when the user confirms the purchase
+        alert('Thank you for your purchase!');
+        bootstrapModal.hide(); // Close the modal
+      });
+  
+      // Cleanup: Remove the modal from the DOM when it's hidden
+      modal.addEventListener('hidden.bs.modal', () => {
+        modal.remove();
+      });
+    }
+  
+    // Add a click event listener to the total element
+    totalElement.addEventListener('click', showConfirmationModal);
+
+  
