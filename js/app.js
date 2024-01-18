@@ -115,29 +115,41 @@ function addToCard(key) {
 }
 
 function reloadCard() {
-  listCard.innerHTML = '';
-  let count = 0;
-  let totalPrice = 0;
-  listCards.forEach((value, key) => {
-    totalPrice = totalPrice + value.price;
-    count = count + value.quantity;
-    if (value != null) {
-      let newDiv = document.createElement('li');
-      newDiv.innerHTML = `
-                <div><img src="image/${value.image}"/></div>
-                <div>${value.name}</div>
-                <div>${value.price.toLocaleString()}</div>
-                <div>
-                    <button onclick="changeQuantity(${key}, ${value.quantity - 1})">-</button>
-                    <div class="count">${value.quantity}</div>
-                    <button onclick="changeQuantity(${key}, ${value.quantity + 1})">+</button>
-                </div>`;
-      listCard.appendChild(newDiv);
-    }
-  })
-  total.innerText = totalPrice.toLocaleString();
-  quantity.innerText = count;
-}
+    listCard.innerHTML = '';
+    let count = 0;
+    let subTotal = 0;
+  
+    listCards.forEach((value, key) => {
+      subTotal = subTotal + value.price;
+      count = count + value.quantity;
+    });
+  
+    // Calculate total cost with VAT (12%) and service charge (5%)
+    let vat = 0.12; // 12%
+    let serviceCharge = 0.05; // 5%
+    let totalVat = subTotal * vat;
+    let totalServiceCharge = subTotal * serviceCharge;
+    let totalPrice = subTotal + totalVat + totalServiceCharge;
+  
+    listCards.forEach((value, key) => {
+      if (value != null) {
+        let newDiv = document.createElement('li');
+        newDiv.innerHTML = `
+                  <div><img src="image/${value.image}"/></div>
+                  <div>${value.name}</div>
+                  <div>${value.price.toLocaleString()}</div>
+                  <div>
+                      <button onclick="changeQuantity(${key}, ${value.quantity - 1})">-</button>
+                      <div class="count">${value.quantity}</div>
+                      <button onclick="changeQuantity(${key}, ${value.quantity + 1})">+</button>
+                  </div>`;
+        listCard.appendChild(newDiv);
+      }
+    });
+  
+    total.innerText = totalPrice.toLocaleString();
+    quantity.innerText = count;
+  }
 
 function changeQuantity(key, quantity) {
   if (quantity == 0) {
@@ -255,6 +267,18 @@ function showConfirmationModal() {
             paymentAmountModal.id = 'paymentAmountModal';
             paymentAmountModal.setAttribute('tabindex', '-1');
             paymentAmountModal.setAttribute('aria-hidden', 'true');
+
+              // Calculate subtotal
+    let subTotal = 0;
+    listCards.forEach((value) => {
+      subTotal += value.price;
+    });
+
+ // Calculate VAT (12%) and service charge (5%)
+      let vat = 0.12; // 12%
+      let serviceCharge = 0.05; // 5%
+      let totalVat = subTotal * vat;
+      let totalServiceCharge = subTotal * serviceCharge;
           
             // Modal content for payment amount input
             paymentAmountModal.innerHTML = `
@@ -265,7 +289,17 @@ function showConfirmationModal() {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <label for="paymentAmount">Amount:</label>
+              <label for="vat">Value Added Tax (12%): ₱${totalVat.toFixed(2)}</label>
+              <br/>
+              <label for="serviceCharge">Service Charge (5%): ₱${totalServiceCharge.toFixed(2)}</label>
+              <br/>
+              <label for="separator"> ------------------------------- </label>
+              <br>
+
+                        <label for="totalCost">Total: <b> ₱${total.innerText} </b></label>
+                        <br/>
+                        <br/>
+                            <label for="paymentAmount">Amount to pay:</label>
                             <input type="number" id="paymentAmount" class="form-control" placeholder="Enter amount" required>
                         </div>
                         <div class="modal-footer">
