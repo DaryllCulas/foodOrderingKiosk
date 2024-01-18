@@ -158,14 +158,14 @@ function changeQuantity(key, quantity){
   
       // Modal content
       modal.innerHTML = `
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                   <div class="modal-header">
                       <h5 class="modal-title">Confirm Purchase</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                      <p>Do you want to proceed with the purchase?</p>
+                      <p>Are you sure you want to proceed with these orders?</p>
                       <p>Total Amount: ₱${total.innerText}</p>
                   </div>
                   <div class="modal-footer">
@@ -186,6 +186,7 @@ function changeQuantity(key, quantity){
       // Handle the "Confirm Purchase" button click
       let confirmPurchaseButton = document.getElementById('confirmPurchase');
       confirmPurchaseButton.addEventListener('click', () => {
+
         // Perform actions when the user confirms the purchase
         alert('Thank you for your purchase!');
         bootstrapModal.hide(); // Close the modal
