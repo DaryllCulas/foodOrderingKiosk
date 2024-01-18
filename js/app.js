@@ -8,6 +8,7 @@ let quantity = document.querySelector('.quantity');
 let totalElement = document.querySelector('.total');
 
 
+
 openShopping.addEventListener('click', ()=>{
     body.classList.add('active');
 })
@@ -165,8 +166,8 @@ function changeQuantity(key, quantity){
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                      <p>Are you sure you want to proceed with these orders?</p>
-                      <p>Total Amount: ₱${total.innerText}</p>
+                      <p>Are you certain you wish to proceed with these orders?</p>
+                      <b>Total Cost: ₱${total.innerText}</b>
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -181,24 +182,94 @@ function changeQuantity(key, quantity){
   
       // Activate the Bootstrap modal
       let bootstrapModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-      bootstrapModal.show();
-  
+      bootstrapModal.show(); 
       // Handle the "Confirm Purchase" button click
+
+      /*************************************************************************/
       let confirmPurchaseButton = document.getElementById('confirmPurchase');
       confirmPurchaseButton.addEventListener('click', () => {
 
+
+        // Create a sub-modal for payment method selection
+            let paymentMethodModal = document.createElement('div');
+            paymentMethodModal.classList.add('modal', 'fade');
+            paymentMethodModal.id = 'paymentMethodModal';
+            paymentMethodModal.setAttribute('tabindex', '-1');
+            paymentMethodModal.setAttribute('aria-hidden', 'true');
+
+        // Sub-modal content for payment method selection
+    paymentMethodModal.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Payment Method</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="paymentMethodForm">
+                    <div class="mb-3">
+                        <input type="radio" id="cashMethod" name="paymentMethod" value="cash">
+                        <label for="cashMethod"><img src="/image/Cash.png" alt="Cash" width="50" height="40"> <b>Cash (Peso & Dollars)</b></label>
+                    </div>
+                    <div class="mb-3">
+                        <input type="radio" id="eCashMethod" name="paymentMethod" value="eCash">
+                        <label for="eCashMethod"><img src="/image/PayMaya_Logo.png" alt="E-Cash" width="50" height ="40"> <img src="/image/eCash.png" alt="E-Cash" width="50" height ="40"> &nbsp;<b>E-Cash (Paymaya, Gcash)</b></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmPaymentMethod">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+`;
+
+  // Append the payment method modal to the body
+  document.body.appendChild(paymentMethodModal);
+
+  // Activate the Bootstrap modal for payment method selection
+  let bootstrapPaymentMethodModal = new bootstrap.Modal(document.getElementById('paymentMethodModal'));
+  bootstrapPaymentMethodModal.show();
+
+  // Handle the "Confirm Payment" button click in payment method modal
+  let confirmPaymentMethodButton = document.getElementById('confirmPaymentMethod');
+  if (confirmPaymentMethodButton) {
+    confirmPaymentMethodButton.addEventListener('click', () => {
+      // Get the selected payment method
+      let paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+
+      if (paymentMethod) {
+        // Perform actions when the user confirms the payment method
+        alert(`Payment confirmed with ${paymentMethod.value}`);
+        bootstrapPaymentMethodModal.hide(); // Close the sub-modal
+        bootstrapModal.hide(); // Close the main modal
+      } else {
+        alert('Please select a payment method.');
+      }
+    });
+  } else {
+    console.error("Element with id 'confirmPaymentMethod' not found");
+  }
+   // Cleanup: Remove the payment method modal from the DOM when it's hidden
+   paymentMethodModal.addEventListener('hidden.bs.modal', () => {
+    paymentMethodModal.remove();
+  });
+
+
+
         // Perform actions when the user confirms the purchase
-        alert('Thank you for your purchase!');
+        // alert('Thank you for your purchase!');
         bootstrapModal.hide(); // Close the modal
+
       });
   
+
+      /**********************************************************************/
       // Cleanup: Remove the modal from the DOM when it's hidden
       modal.addEventListener('hidden.bs.modal', () => {
         modal.remove();
       });
     }
-  
     // Add a click event listener to the total element
     totalElement.addEventListener('click', showConfirmationModal);
-
-  

@@ -32,7 +32,7 @@ header{
     padding: 5px 30px;
     border-radius: 20px;
     top: 0; 
-   
+  
 }
 header .shopping{
     position: relative;
@@ -183,3 +183,15 @@ header .shopping span{
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
+#paymentMethodForm input[type="radio"] {
+    width: 20px; /* Set the width of the radio buttons */
+    height: 20px; /* Set the height of the radio buttons */
+    margin-right: 5px; /* Add margin to the right of radio buttons */
+    padding: 5px; /* Add padding to the radio buttons */
+  }
+
+  h5,
+  .modal-header {
+    background-color: goldenrod; 
+    font-weight: bolder;
+  }
