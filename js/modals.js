@@ -93,9 +93,17 @@ function showConfirmationModal() {
         /************** ***********************************************************/
         if (paymentMethod) {
           // Perform actions when the user confirms the payment method
-          alert(`Payment confirmed with ${paymentMethod.value}`);
+           alert(`Payment confirmed with ${paymentMethod.value}`);
+              
+          
 
-          // Code for another modal function for input payment amount
+
+
+
+
+
+
+          
           // Create a modal element for payment amount input
           let paymentAmountModal = document.createElement('div');
           paymentAmountModal.classList.add('modal', 'fade');
@@ -128,6 +136,9 @@ function showConfirmationModal() {
               <br/>
               <label for="serviceCharge">Service Charge (5%): ₱${totalServiceCharge.toFixed(2)}</label>
               <br/>
+              <label for="modeOfPayment"> Mode of payment: ${paymentMethod.value}</label>
+              <br>
+              <br>
               <label for="separator"> ------------------------------- </label>
               <br>
 
@@ -209,14 +220,14 @@ function showConfirmationModal() {
 
                   // Modal content for insufficient payment
                   insufficientPaymentModal.innerHTML = `
-          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Insufficient Payment</h5>
+              <div class="modal-header" style="background-color: red;">
+                <h5 class="modal-title" style="background-color: transparent;">Insufficient Payment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p>Payment amount is less than the total cost. Please enter a valid amount.</p>
+                <p style="color: black;">Payment amount is less than the total cost. Please enter a valid amount.</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -242,7 +253,7 @@ function showConfirmationModal() {
 
                 // Modal content for invalid payment amount
                 invalidPaymentModal.innerHTML = `
-			<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-dialog">
 				<div class="modal-content border-danger">
 					<div class="modal-header bg-danger text-black">
 						<h5 class="modal-title" style ="background-color: transparent;">Invalid Payment Amount</h5>
