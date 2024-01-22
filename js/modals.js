@@ -94,16 +94,7 @@ function showConfirmationModal() {
         if (paymentMethod) {
           // Perform actions when the user confirms the payment method
            alert(`Payment confirmed with ${paymentMethod.value}`);
-              
-          
-
-
-
-
-
-
-
-          
+    
           // Create a modal element for payment amount input
           let paymentAmountModal = document.createElement('div');
           paymentAmountModal.classList.add('modal', 'fade');
@@ -117,11 +108,6 @@ function showConfirmationModal() {
             subTotal += value.price;
           });
 
-          // Calculate VAT (12%) and service charge (5%)
-          let vat = 0.12; // 12%
-          let serviceCharge = 0.05; // 5%
-          let totalVat = subTotal * vat;
-          let totalServiceCharge = subTotal * serviceCharge;
 
           // Modal content for payment amount input
           paymentAmountModal.innerHTML = `
@@ -132,16 +118,6 @@ function showConfirmationModal() {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-              <label for="vat">Value Added Tax (12%): ₱${totalVat.toFixed(2)}</label>
-              <br/>
-              <label for="serviceCharge">Service Charge (5%): ₱${totalServiceCharge.toFixed(2)}</label>
-              <br/>
-              <label for="modeOfPayment"> Mode of payment: ${paymentMethod.value}</label>
-              <br>
-              <br>
-              <label for="separator"> ------------------------------- </label>
-              <br>
-
                         <label for="totalCost">Total: <b> ₱${total.innerText} </b></label>
                         <br/>
                         <br/>
@@ -183,34 +159,91 @@ function showConfirmationModal() {
                   paymentSuccessModal.id = 'paymentSuccessModal';
                   paymentSuccessModal.setAttribute('tabindex', '-1');
                   paymentSuccessModal.setAttribute('aria-hidden', 'true');
-
+              
                   // Modal content for successful payment
                   paymentSuccessModal.innerHTML = `
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header" style="background-color: yellowgreen;">
-                <h5 class="modal-title" style="background-color: transparent;">Payment Successful</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>Payment amount confirmed: ₱${paymentAmount.toFixed(2)} via ${paymentMethod.value}</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-              </div>
-            </div>
-          </div>
-        `;
-
+                      <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                              <div class="modal-header" style="background-color: yellowgreen;">
+                                  <h5 class="modal-title" style="background-color: transparent;">Payment Successful</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <p>Payment amount confirmed: ₱${paymentAmount.toFixed(2)} via ${paymentMethod.value}</p>
+                                  <button type="button" id="successButton" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                              </div>
+                          </div>
+                      </div>
+                  `;
+              
                   // Append the payment success modal to the body
                   document.body.appendChild(paymentSuccessModal);
-
+              
                   // Activate the Bootstrap modal for payment success
                   let bootstrapPaymentSuccessModal = new bootstrap.Modal(document.getElementById('paymentSuccessModal'));
                   bootstrapPaymentSuccessModal.show();
-
-                  bootstrapPaymentAmountModal.hide(); // Close the payment amount modal
-                } else {
+                  bootstrapPaymentAmountModal.hide();
+              
+                  // Handle the "OK" button click
+                  let successButton = document.getElementById('successButton');
+                  if (successButton) {
+                      successButton.addEventListener('click', () => {
+                          // Prepare order details for confirmation
+                          let orderConfirmationDetails = listCards.map((item) => ({
+                              name: item.name,
+                              quantity: item.quantity,
+                              price: item.price,
+                          }));
+              
+                          // Create a modal for order confirmation
+                          let orderConfirmationModal = document.createElement('div');
+                          orderConfirmationModal.classList.add('modal', 'fade');
+                          orderConfirmationModal.id = 'orderConfirmationModal';
+                          orderConfirmationModal.setAttribute('tabindex', '-1');
+                          orderConfirmationModal.setAttribute('aria-hidden', 'true');
+              
+                          // Modal content for order confirmation
+                          orderConfirmationModal.innerHTML = `
+                              <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                      <div class="modal-header" style="background-color: lightblue;">
+                                          <h5 class="modal-title" style="background-color: transparent;">Order Confirmation</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <p>Is everything correct?</p>
+                                          <ul>
+                                              ${orderConfirmationDetails.map(item =>
+                                                  `<li>${item.quantity} x ${item.name} - ₱${item.price.toFixed(2)}</li>`
+                                              ).join('')}
+                                          </ul>
+                                          <p>Total: ₱${totalCost.toFixed(2)}</p>
+                                          <p>Payment Method: ${paymentMethod.value}</p>
+                                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          `;
+              
+                          // Append the order confirmation modal to the body
+                          document.body.appendChild(orderConfirmationModal);
+              
+                          // Activate the Bootstrap modal for order confirmation
+                          let bootstrapOrderConfirmationModal = new bootstrap.Modal(document.getElementById('orderConfirmationModal'));
+                          bootstrapOrderConfirmationModal.show();
+              
+                          // Cleanup: Remove the order confirmation modal from the DOM when it's hidden
+                          orderConfirmationModal.addEventListener('hidden.bs.modal', () => {
+                              orderConfirmationModal.remove();
+                          });
+                      });
+                  }
+              
+                  // Cleanup: Remove the payment success modal from the DOM when it's hidden
+                  paymentSuccessModal.addEventListener('hidden.bs.modal', () => {
+                      paymentSuccessModal.remove();
+                  });
+              } else {
                   // Create a modal for insufficient payment
                   let insufficientPaymentModal = document.createElement('div');
                   insufficientPaymentModal.classList.add('modal', 'fade');
