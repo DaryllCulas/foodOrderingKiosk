@@ -93,8 +93,8 @@ function showConfirmationModal() {
         /************** ***********************************************************/
         if (paymentMethod) {
           // Perform actions when the user confirms the payment method
-           alert(`Payment confirmed with ${paymentMethod.value}`);
-    
+          alert(`Payment confirmed with ${paymentMethod.value}`);
+
           // Create a modal element for payment amount input
           let paymentAmountModal = document.createElement('div');
           paymentAmountModal.classList.add('modal', 'fade');
@@ -168,7 +168,7 @@ function showConfirmationModal() {
                                   <h5 class="modal-title" style="background-color: transparent;">Payment Successful</h5>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <div class="modal-body">
+                              <div class="modal-body" style="text-align: center;">
                                   <p>Payment amount confirmed: ₱${paymentAmount.toFixed(2)} via ${paymentMethod.value}</p>
                                   <button type="button" id="successButton" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                               </div>
@@ -211,15 +211,24 @@ function showConfirmationModal() {
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body">
-                                          <p>Is everything correct?</p>
+                                          <b>Is everything correct?</b>
+                                          <br>
+                                          <br>
                                           <ul>
                                               ${orderConfirmationDetails.map(item =>
                                                   `<li>${item.quantity} x ${item.name} - ₱${item.price.toFixed(2)}</li>`
                                               ).join('')}
                                           </ul>
-                                          <p>Total: ₱${totalCost.toFixed(2)}</p>
-                                          <p>Payment Method: ${paymentMethod.value}</p>
-                                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+                                          <p>Subtotal: ₱${totalCost.toFixed(2)}</p>
+                                          <p>VAT (12%): ₱${(totalCost * 0.12).toFixed(2)}</p>
+                                          <p>Service Charge (5%): ₱${(totalCost * 0.05).toFixed(2)}</p>
+                                          <p>Mode of payment: ${paymentMethod.value}</p>
+                                          <p>Payment: ₱${paymentAmount.toFixed(2)}</p>
+                                          <br>
+                                          <p>---------------------------------</p>
+                                          <p><b>Grand Total:  ₱${totalCost.toFixed(2)}</b></p>
+                                          <p>Change: ₱${(paymentAmount - totalCost).toFixed(2)}</p>
+                                          <button type="button" id="confirmationSuccessBtn" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
                                       </div>
                                   </div>
                               </div>
@@ -243,7 +252,8 @@ function showConfirmationModal() {
                   paymentSuccessModal.addEventListener('hidden.bs.modal', () => {
                       paymentSuccessModal.remove();
                   });
-              } else {
+              }
+               else {
                   // Create a modal for insufficient payment
                   let insufficientPaymentModal = document.createElement('div');
                   insufficientPaymentModal.classList.add('modal', 'fade');
