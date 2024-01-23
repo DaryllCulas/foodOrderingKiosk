@@ -1,5 +1,7 @@
 // Function to show the confirmation modal
 function showConfirmationModal() {
+
+  console.log('Modals script loaded.');
   // Create a modal element
   let modal = document.createElement('div');
   modal.classList.add('modal', 'fade');
