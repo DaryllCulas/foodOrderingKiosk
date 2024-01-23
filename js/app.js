@@ -20,73 +20,67 @@ let products = [{
 		id: 2,
 		name: 'Manok na pinakurat',
 		image: 'manokNaPinakurat.png',
-		price: 280
+		price: 285
 	},
 	{
 		id: 4,
 		name: 'Menudo',
 		image: 'menudo.png',
-		price: 300
+		price: 353
 	},
 	{
 		id: 5,
 		name: 'Nigerian Roasted Chicken',
 		image: 'RoastedNigerianChicken.png',
-		price: 400
+		price: 457
 	},
 	{
 		id: 6,
 		name: 'Chicken Masala Pizza',
 		image: 'chickenMasalaPizza.png',
-		price: 300
+		price: 323
 	},
 	{
 		id: 7,
 		name: 'Afritada',
 		image: 'afritada.png',
-		price: 240
+		price: 249
 	},
 	{
 		id: 8,
 		name: '3-star Chicken Wellington',
 		image: 'chickenWellington.png',
-		price: 2000
+		price: 2850
 	},
 	{
 		id: 9,
 		name: 'Pinatayong Manok',
 		image: 'pinatayongManok.png',
-		price: 300
+		price: 346
 	},
 	{
 		id: 14,
 		name: 'Kanto Fingershots Chicken',
 		image: 'kantoHotshots.png',
-		price: 80
+		price: 89
 	},
 	{
 		id: 16,
 		name: 'Gin Shembot',
 		image: 'ginBulag.png',
-		price: 100
-	},
-	{
-		id: 20,
-		name: 'Mountain Dew',
-		image: 'mountainDew.jpeg',
-		price: 100
+		price: 123
 	},
 	{
 		id: 21,
 		name: 'Coca Cola',
 		image: 'cocacola.jpeg',
-		price: 100
+		price: 116
 	},
 	{
 		id: 25,
 		name: 'Gorio\'s Mineral Water',
 		image: 'goriomineralwater.png',
-		price: 130
+		price: 137
 	},
 ];
 let listCards = [];
