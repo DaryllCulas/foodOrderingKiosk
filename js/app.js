@@ -17,67 +17,67 @@ closeShopping.addEventListener('click', () => {
 })
 
 let products = [{
-		id: 2,
+		id: 1,
 		name: 'Manok na pinakurat',
 		image: 'manokNaPinakurat.png',
 		price: 285
 	},
 	{
-		id: 4,
+		id: 2,
 		name: 'Menudo',
 		image: 'menudo.png',
 		price: 353
 	},
 	{
-		id: 5,
+		id: 3,
 		name: 'Nigerian Roasted Chicken',
 		image: 'RoastedNigerianChicken.png',
 		price: 457
 	},
 	{
-		id: 6,
+		id: 4,
 		name: 'Chicken Masala Pizza',
 		image: 'chickenMasalaPizza.png',
 		price: 323
 	},
 	{
-		id: 7,
+		id: 5,
 		name: 'Afritada',
 		image: 'afritada.png',
 		price: 249
 	},
 	{
-		id: 8,
+		id: 6,
 		name: '3-star Chicken Wellington',
 		image: 'chickenWellington.png',
 		price: 2850
 	},
 	{
-		id: 9,
+		id: 7,
 		name: 'Pinatayong Manok',
 		image: 'pinatayongManok.png',
 		price: 346
 	},
 	{
-		id: 14,
+		id: 8,
 		name: 'Kanto Fingershots Chicken',
 		image: 'kantoHotshots.png',
 		price: 89
 	},
 	{
-		id: 16,
+		id: 9,
 		name: 'Gin Shembot',
 		image: 'ginBulag.png',
 		price: 123
 	},
 	{
-		id: 21,
+		id: 10,
 		name: 'Coca Cola',
 		image: 'cocacola.jpeg',
 		price: 116
 	},
 	{
-		id: 25,
+		id: 11,
 		name: 'Gorio\'s Mineral Water',
 		image: 'goriomineralwater.png',
 		price: 137
@@ -154,6 +154,5 @@ function changeQuantity(key, quantity) {
 	}
 	reloadCard();
 }
-
 
 
