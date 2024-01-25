@@ -367,30 +367,55 @@ function showConfirmationModal() {
 // Add a click event listener to the total element
 totalElement.addEventListener('click', showConfirmationModal);
 
-// Newly added generatePDF function
 function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
   // Extract order details
-  let orderConfirmationDetails = listCards.map((item) => ({
+  let orderConfirmationDetails = listCards.map((item, index) => ({
+      id: index + 1,
       name: item.name,
       quantity: item.quantity,
       price: item.price,
   }));
 
+  // Calculate totals
+  let subtotal = orderConfirmationDetails.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+  let vat = subtotal * 0.12;
+  let serviceCharge = subtotal * 0.05;
+  let grandTotal = subtotal + vat + serviceCharge;
+
+  doc.setFontSize(10);
+
   // Add title to the PDF
-  doc.text("Order Confirmation", 10, 10);
+  doc.text("DACAC's OFFICIAL RECEIPT", 10, 10);
+  doc.text("\"Walang Palpak sa Unang papak!\"", 10, 20);
 
   // Add order details to the PDF
-  let y = 20; // Start position
-  orderConfirmationDetails.forEach((item, index) => {
-      doc.text(`Item ${index + 1}: ${item.name}`, 10, y);
-      doc.text(`Quantity: ${item.quantity}`, 10, y + 10);
-      doc.text(`Price: ₱${item.price.toFixed(2)}`, 10, y + 20);
-      y += 30; // Move down for the next item
+  let y = 30; // Start position
+  orderConfirmationDetails.forEach((item) => {
+      doc.text(`ITEM NO: ${String(item.id)}`, 10, y);
+      doc.text(`PRODUCT NAME: ${String(item.name)}`, 10, y + 10);
+      doc.text(`QUANTITY: ${String(item.quantity)}`, 10, y + 20);
+      doc.text(`PRICE: Php${String(item.price.toFixed(2))}`, 10, y + 30);
+      y += 40; // Move down for the next item
+      y += 5; // Create a line break after each set of order details
   });
+  y += 6;
+  // Add totals to the PDF
+  
+
+  doc.text("SUBTOTAL: Php" + String(subtotal.toFixed(2)), 10, y);
+  doc.text("VAT (12%): Php" + String(vat.toFixed(2)), 10, y + 10);
+  doc.text("SERVICE CHARGE (5%): Php" + String(serviceCharge.toFixed(2)), 10, y + 20);
+  doc.text("AMOUNT OF PAYMENT: Php" + String(grandTotal.toFixed(2)), 10, y + 30);
+  doc.text("MODE OF PAYMENT: eCash", 10, y + 40);
+  doc.text("CHANGE: Php" + String((grandTotal - grandTotal).toFixed(2)), 10, y + 50);
+  doc.text("------------------------------------------------------------", 10, y + 60);
+  doc.text("GRAND TOTAL: Php" + String(grandTotal.toFixed(2)), 10, y + 70);
 
   // Save the PDF
   doc.save("OrderConfirmation.pdf");
 }
+
+
