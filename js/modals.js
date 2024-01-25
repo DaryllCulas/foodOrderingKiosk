@@ -385,11 +385,17 @@ function generatePDF() {
   let serviceCharge = subtotal * 0.05;
   let grandTotal = subtotal + vat + serviceCharge;
 
-  doc.setFontSize(10);
+  doc.setFontSize(8);
 
-  // Add title to the PDF
-  doc.text("DACAC's OFFICIAL RECEIPT", 10, 10);
-  doc.text("\"Walang Palpak sa Unang papak!\"", 10, 20);
+      // Get the width of the page
+      var pageWidth = doc.internal.pageSize.width;
+
+      // Add title to the PDF
+      var title = "DACAC's OFFICIAL RECEIPT";
+      doc.text(title, (pageWidth - doc.getTextWidth(title)) / 2, 10);
+  
+      var subTitle = "\"Walang Palpak sa Unang papak!\"";
+      doc.text(subTitle, (pageWidth - doc.getTextWidth(subTitle)) / 2, 20);
 
   // Add order details to the PDF
   let y = 30; // Start position
