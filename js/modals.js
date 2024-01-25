@@ -230,7 +230,8 @@ function showConfirmationModal() {
                                           <p>---------------------------------</p>
                                           <p><b>Grand Total:  ₱${totalCost.toFixed(2)}</b></p>
                                           <p>Change: ₱${(paymentAmount - totalCost).toFixed(2)}</p>
-                                          <button type="button" id="confirmationSuccessBtn" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+                                          <button type="button" id="confirmationSuccessBtn" onclick="generatePDF()"
+                                           class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
                                       </div>
                                   </div>
                               </div>
@@ -365,3 +366,31 @@ function showConfirmationModal() {
 }
 // Add a click event listener to the total element
 totalElement.addEventListener('click', showConfirmationModal);
+
+// Newly added generatePDF function
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Extract order details
+  let orderConfirmationDetails = listCards.map((item) => ({
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+  }));
+
+  // Add title to the PDF
+  doc.text("Order Confirmation", 10, 10);
+
+  // Add order details to the PDF
+  let y = 20; // Start position
+  orderConfirmationDetails.forEach((item, index) => {
+      doc.text(`Item ${index + 1}: ${item.name}`, 10, y);
+      doc.text(`Quantity: ${item.quantity}`, 10, y + 10);
+      doc.text(`Price: ₱${item.price.toFixed(2)}`, 10, y + 20);
+      y += 30; // Move down for the next item
+  });
+
+  // Save the PDF
+  doc.save("OrderConfirmation.pdf");
+}
